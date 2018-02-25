@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset=utf-8 />
+	<title></title>
+	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+	<link rel='stylesheet' href='//api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.css' />
+	<style>
+		body { margin:0; padding:0; }
+		#map { position:absolute; top:0; bottom:0; width:100%; z-index:1; cursor:default; }
+	</style>
+</head>
+<body>
+	<div id='map'></div>
+
+    <script src='//api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.js'></script>
+
+	<script>
+		mapboxgl.accessToken = 'pk.eyJ1IjoidGF0dGlpIiwiYSI6ImNqMWFrZ3ZncjAwNmQzM3BmazRtNngxam8ifQ.DNMc6j7E4Gh7UkUAaEAPxA';
+
+		var map = new mapboxgl.Map({
+			container: 'map',
+			style: 'mapbox://styles/tattii/cj8fozpkv0jn22rnwn6h65hvc',
+			zoom: 4.2,
+			center: [136.6, 35.5],
+			hash: true,
+			localIdeographFontFamily: "'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif"
+		});
+
+		map.on('load', function() {
+		});
+	</script>
+
+</body>
+</html>
