@@ -31,7 +31,9 @@
 		map.on('load', function() {
 			var date = new Date(Date.now() - 5*60*1000); // 5 minutes before
 			var refTime = date.getUTCFullYear() + pad(date.getUTCMonth()+1) + pad(date.getUTCDate()) + pad(date.getUTCHours()) + pad(Math.floor(date.getUTCMinutes()/5)*5);
-			var url =  "http://www.jma.go.jp/jp/highresorad/highresorad_tile/HRKSNC/" + refTime + "/" + refTime + "/";
+
+			//var url =  "http://www.jma.go.jp/jp/highresorad/highresorad_tile/HRKSNC/" + refTime + "/" + refTime + "/";
+			var url =  "https://d3le8jfdf5veqy.cloudfront.net/jp/highresorad/highresorad_tile/HRKSNC/" + refTime + "/" + refTime + "/";
 
 			var meshmapgl = new MeshmapGL(url).addTo(map);
 		});
