@@ -23,8 +23,8 @@ class MeshmapGL {
         var east = this.bounds[0][0] + tilew * (coord.x + 1);
 
         var tileh = (this.bounds[1][1] - this.bounds[0][1]) / Math.pow(2, coord.z);
-        var north = this.bounds[1][0] - tileh * coord.y;
-        var south = this.bounds[1][0] - tileh * coord.y;
+        var north = this.bounds[1][1] - tileh * coord.y;
+        var south = this.bounds[1][1] - tileh * (coord.y + 1);
 
         return [west, east, north, south];
     }
@@ -33,6 +33,8 @@ class MeshmapGL {
         var url = this.getTileUrl(coord);
         var bounds = this.getTileBounds(coord);
         var id = ['tile', coord.z, coord.x, coord.y].join('-');
+
+        console.log(bounds);
 
         this.map.addSource(id, {
             type: 'image',
@@ -44,10 +46,19 @@ class MeshmapGL {
                 [bounds[0], bounds[3]]
             ]
         });
+
+        this.map.addLayer({
+            id: id,
+            source: id,
+            type: 'raster',
+            paint: {
+                'raster-opacity': this.opacity
+            }
+        });
     }
 
     init (){
-        this.addTile({ z: 4, x: 6, y: 7 });
+        this.addTile({ z: 4, x: 9, y: 5 });
     }
 }
 
