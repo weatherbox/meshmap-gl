@@ -57,7 +57,7 @@ class MeshmapGL {
             paint: {
                 'raster-opacity': this.opacity
             }
-        });
+        }, 'admin-3-4-boundaries');
     }
 
     update (){
