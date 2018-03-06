@@ -6,6 +6,8 @@ class MeshmapGL {
         this.bounds = new mapboxgl.LngLatBounds([100, 7], [170, 61]);
         this.zooms = [2, 4, 6];
         this.opacity = 0.7;
+
+        this.tiles = {};
     }
     
     addTo (map){
@@ -15,7 +17,11 @@ class MeshmapGL {
     
     init (){
         this.update();
-        //this.addTile({ z: 4, x: 9, y: 5 });
+
+        var self = this;
+        this.map.on("render", function(){
+            self.update();
+        });
     }
 
     getTileUrl (coord){
@@ -39,6 +45,9 @@ class MeshmapGL {
         var bounds = this.getTileBounds(coord);
         var id = ['tile', coord.z, coord.x, coord.y].join('-');
 
+        if (this.tiles[id]) return;
+        this.tiles[id] = true;
+
         this.map.addSource(id, {
             type: 'image',
             url: url,
@@ -60,13 +69,19 @@ class MeshmapGL {
         }, 'admin-3-4-boundaries');
     }
 
+    _getTileZoom (zoom){
+        return (zoom <= 4) ? 2
+             : (zoom <= 6) ? 4
+             : 6;
+    }
+
     update (){
         if (!this.map) { return; }
 
         var bounds = this.map.getBounds(),
             zoom = this.map.getZoom();
 
-        var tileZoom = 2;
+        var tileZoom = this._getTileZoom(zoom);
         var ntiles = Math.pow(2, tileZoom);
         var tilew = (this.bounds.getEast() - this.bounds.getWest()) / ntiles;
         var tileh = (this.bounds.getNorth() - this.bounds.getSouth()) / ntiles;
@@ -80,8 +95,6 @@ class MeshmapGL {
             Math.max(0, Math.floor((this.bounds.getNorth() - bounds.getNorth()) / tileh))
         );
         var tileBounds = new mapboxgl.LngLatBounds(sw, ne);
-
-        console.log(tileBounds);
 
         for (var x = tileBounds.getWest(); x <= tileBounds.getEast(); x++){
             for (var y = tileBounds.getNorth(); y <= tileBounds.getSouth(); y++){
